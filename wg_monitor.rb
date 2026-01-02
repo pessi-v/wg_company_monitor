@@ -49,6 +49,9 @@ class WGMonitor
   end
 
   def run
+    timestamp = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+    puts "\n[#{timestamp}] Starting WG Monitor"
+
     all_keyword_matches = []
 
     SEARCH_DISTRICTS.each do |district|
@@ -82,7 +85,8 @@ class WGMonitor
     end
 
     if all_keyword_matches.any?
-      puts "\n🎉 Found #{all_keyword_matches.length} NEW listing(s) with '#{REQUIRED_KEYWORD}' across all districts!"
+      result_time = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+      puts "\n[#{result_time}] 🎉 Found #{all_keyword_matches.length} NEW listing(s) with '#{REQUIRED_KEYWORD}' across all districts!"
       all_keyword_matches.each do |listing|
         puts "\n  ✨ NEW: #{listing[:street]} - #{listing[:price]} - #{listing[:size]} - #{listing[:wg_type]}"
         puts "     Available: #{listing[:available]}"
@@ -92,7 +96,8 @@ class WGMonitor
       # Open each new match in Firefox
       open_matches_in_firefox(all_keyword_matches)
     else
-      puts "\n✓ No new listings with '#{REQUIRED_KEYWORD}' found in any district"
+      result_time = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+      puts "\n[#{result_time}] ✓ No new listings with '#{REQUIRED_KEYWORD}' found in any district"
     end
   end
 
